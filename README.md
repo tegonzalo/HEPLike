@@ -18,6 +18,7 @@ To install ROOT see:
 https://root.cern.ch/building-root
 
 #### Instalation
+```
 git clone  https://github.com/KrakowHEPSoft/HEPLike.git
 
 cd HEPLike
@@ -25,14 +26,21 @@ cd HEPLike
 mkdir build
 
 cd build
+```
 
-# Build with ROOT
+Build with ROOT
+```
 cmake -DUSE_ROOT=ON ..
+```
 
-# Build without ROOT
+Build without ROOT
+```
 cmake -DUSE_ROOT=OFF ..
+```
 
+```
 make -jN
+```
 
 #### Structure of the program:
 
@@ -44,18 +52,25 @@ utils - directory containing the python scripts for handing database, creating b
 
 
 ##### To run examples:
+```
 cmake -DEXECUTABLE=TRUE ..
 
 make -jN
+```
 
 ##### To run test:
 
+```
 cmake -DEXECUTABLE=TRUE ..
 
 ctest
-or equivalent
-make test
+```
 
+or equivalent
+
+```
+make test
+```
 
 ##### Measurements repository:
 https://github.com/KrakowHEPSoft/HEPLikeData

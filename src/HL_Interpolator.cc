@@ -74,13 +74,19 @@ HL_Interpolator1D::~HL_Interpolator1D()
 
 double HL_Interpolator1D::Eval(double x) const
 {
+  // If it's outside the edges throw error
   if(x < x_min or x > x_max)
     throw std::runtime_error("Variable outside of interpolation range.");
 
+  // If it's inside, but outside the min and max values in the samples, give value at edge
+  double _x = x;
+  if(x < x_data[0]) _x = x_data[0];
+  else if(x > x_data[nx-1]) _x = x_data[nx-1];
+
   #ifdef USE_ROOT
-    return TG->Eval(x, 0);
+    return TG->Eval(_x, 0);
   #else
-    return gsl_spline_eval(spline, x, x_accel);
+    return gsl_spline_eval(spline, _x, x_accel);
   #endif
 }
 
@@ -187,13 +193,21 @@ HL_Interpolator2D::~HL_Interpolator2D()
 
 double HL_Interpolator2D::Eval(double x, double y) const
 {
+  // If it's outside the edges throw error
   if(x < x_min or x > x_max or y < y_min or y > y_max)
     throw std::runtime_error("Variable outside of interpolation range.");
+
+  // If it's inside but beyond the min and max values of the datasets, return value at edge
+  double _x = x, _y = y;
+  if(x < x_data[0]) _x = x_data[0];
+  else if (x > x_data[nx-1]) _x = x_data[nx-1];
+  if(y < y_data[0]) _y = y_data[0];
+  else if (y > y_data[ny-1]) _y = y_data[ny-1];
 
   #ifdef USE_ROOT
     return TH->Interpolate(x, y);
   #else
-    return gsl_spline2d_eval(spline2d, x, y, x_accel, y_accel);
+    return gsl_spline2d_eval(spline2d, _x, _y, x_accel, y_accel);
   #endif
 }
 

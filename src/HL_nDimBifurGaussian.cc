@@ -42,12 +42,16 @@ void HL_nDimBifurGaussian::Read()
       stat_error_right.push_back( ((*it)[2]).as<double>()  );
       stat_error_left.push_back( (-1.)* ((*it)[3]).as<double>()  );
       syst_error_right.push_back( ((*it)[4]).as<double>()  );
-      if( (*it).size()>5 )
+      if( (*it).size()>4 )
       {
+        syst_error_right.push_back( ((*it)[4]).as<double>()  );
         syst_error_left.push_back( (-1.)*((*it)[5]).as<double>()  );
-
       }
-      else syst_error_left.push_back( ((*it)[4]).as<double>()  );
+      else
+      {
+        syst_error_right.push_back(0);
+        syst_error_left.push_back(0);
+      }
 
     }
   }// read the errors and cenral vaules, now correlation

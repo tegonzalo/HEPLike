@@ -41,7 +41,6 @@ void HL_nDimBifurGaussian::Read()
 
       stat_error_right.push_back( ((*it)[2]).as<double>()  );
       stat_error_left.push_back( (-1.)* ((*it)[3]).as<double>()  );
-      syst_error_right.push_back( ((*it)[4]).as<double>()  );
       if( (*it).size()>4 )
       {
         syst_error_right.push_back( ((*it)[4]).as<double>()  );

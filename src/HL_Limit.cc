@@ -83,6 +83,33 @@ double HL_Limit::GetChi2(double br)
   return chi2;
 }
 
+double HL_Limit::GetChi2(double br, double br_error)
+{
+  double chi2;
+
+  if(useUL== false)
+  {
+    throw std::runtime_error("HL_Limit, error, GetChi2 with theory uncertainty only implemented for 90%CL and 95%CL upper limits!");
+  }
+  else
+  {
+    double error;
+    if(UL95CL>0.)
+    {
+      error=fabs(0. - UL95CL)/1.96;
+    }
+    else if(UL90CL>0.)
+    {
+      error = fabs(0. - UL90CL)/1.64;
+    }
+    double loglikelihood=HL_Stats::gaussian_upper_limit(br, 0., br_error, error, false);
+
+    chi2=loglikelihood*(-2.);
+
+  }
+  return chi2;
+}
+
 double HL_Limit::GetLogLikelihood(double br)
 {
   double chi2=GetChi2(br);
@@ -90,9 +117,21 @@ double HL_Limit::GetLogLikelihood(double br)
 
 }
 
+double HL_Limit::GetLogLikelihood(double br, double br_error)
+{
+  double chi2=GetChi2(br,br_error);
+  return -0.5*chi2;
+}
+
 double HL_Limit::GetLikelihood(double br)
 {
   double log_likelihood=GetLogLikelihood(br);
+  return gsl_sf_exp(log_likelihood);
+}
+
+double HL_Limit::GetLikelihood(double br, double br_error)
+{
+  double log_likelihood=GetLogLikelihood(br,br_error);
   return gsl_sf_exp(log_likelihood);
 }
 

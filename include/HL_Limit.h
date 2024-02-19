@@ -37,9 +37,12 @@ class HL_Limit: public HL_Data
 
   void Read();
   double GetChi2(double);
+  double GetChi2(double,double);
   double GetLogLikelihood(double);
+  double GetLogLikelihood(double,double);
   double GetLikelihood(double);
-  double GetCLs(double val);
+  double GetLikelihood(double,double);
+  double GetCLs(double);
 
  protected:
   std::vector<double> CLs;

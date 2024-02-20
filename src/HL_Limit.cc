@@ -83,9 +83,15 @@ double HL_Limit::GetChi2(double br)
   return chi2;
 }
 
-double HL_Limit::GetChi2(double br, double br_error)
+double HL_Limit::GetChi2(double br, double br_variance)
 {
   double chi2;
+
+  if(br_variance == 0)
+    return GetChi2(br);
+
+  double br_err=sqrt(br_variance);
+
 
   if(useUL== false)
   {
@@ -117,9 +123,9 @@ double HL_Limit::GetLogLikelihood(double br)
 
 }
 
-double HL_Limit::GetLogLikelihood(double br, double br_error)
+double HL_Limit::GetLogLikelihood(double br, double br_variance)
 {
-  double chi2=GetChi2(br,br_error);
+  double chi2=GetChi2(br,br_variance);
   return -0.5*chi2;
 }
 
@@ -129,9 +135,9 @@ double HL_Limit::GetLikelihood(double br)
   return gsl_sf_exp(log_likelihood);
 }
 
-double HL_Limit::GetLikelihood(double br, double br_error)
+double HL_Limit::GetLikelihood(double br, double br_variance)
 {
-  double log_likelihood=GetLogLikelihood(br,br_error);
+  double log_likelihood=GetLogLikelihood(br,br_variance);
   return gsl_sf_exp(log_likelihood);
 }
 

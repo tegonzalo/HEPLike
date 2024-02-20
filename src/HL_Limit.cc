@@ -90,7 +90,7 @@ double HL_Limit::GetChi2(double br, double br_variance)
   if(br_variance == 0)
     return GetChi2(br);
 
-  double br_err=sqrt(br_variance);
+  double br_error=sqrt(br_variance);
 
 
   if(useUL== false)

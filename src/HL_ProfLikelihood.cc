@@ -176,6 +176,8 @@ double HL_ProfLikelihood::GetLogLikelihood(double theory, double theory_variance
   gmin->SetVariable(0, variable, step);
   gmin->Minimize();
   std::vector<double> theory_nuisance = gmin->X();
+  if(theory_nuisance[0] > xmax) theory_nuisance[0] = xmax;
+  if(theory_nuisance[1] < xmin) theory_nuisance[0] = xmin;
 
   double loglikelihood = likelihood->Eval(theory_nuisance[0]);
 

@@ -76,7 +76,7 @@ double HL_Interpolator1D::Eval(double x) const
 {
   // If it's outside the edges invalidate
   if(x < x_min or x > x_max)
-    return -1.0e10;
+    return 1.0e10;
 
   // If it's inside, but outside the min and max values in the samples, give value at edge
   double _x = x;
@@ -195,7 +195,7 @@ double HL_Interpolator2D::Eval(double x, double y) const
 {
   // If it's outside the edges invalidate
   if(x < x_min or x > x_max or y < y_min or y > y_max)
-    return -1.0e-10;
+    return 1.0e-10;
 
   // If it's inside but beyond the min and max values of the datasets, return value at edge
   double _x = x, _y = y;
